@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
-from .models import GetUserPasswords, User
-from ..config import USERS
+from backend.core.routers.models import GetUserPasswords, User
+from backend.core.config import USERS
 
 password_router = APIRouter(
     prefix="/password",
