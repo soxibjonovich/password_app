@@ -3,9 +3,30 @@ import {
     SidebarInset,
     SidebarProvider,
 } from "@/components/ui/sidebar"
-import { LoginForm } from "@/components/login-form"
+import LoginPage from "./login-page"
+import { HomePage } from "./home-page"
+import { useEffect, useState } from "react"
 
 export default function Page() {
+    const [isAuthenticated, setIsAuthenticated] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
+
+    useEffect(() => {
+        const token = localStorage.getItem("auth_token")
+        if (token) {
+            setIsAuthenticated(true)
+        }
+        setIsLoading(false)
+    }, [])
+
+    if (isLoading) {
+        return <div className="flex items-center justify-center h-screen">Loading...</div>
+    }
+
+    if (!isAuthenticated) {
+        return <LoginPage onLoginSuccess={() => setIsAuthenticated(true)} />
+    }
+
     return (
         <SidebarProvider
             style={
@@ -17,11 +38,7 @@ export default function Page() {
         >
             <SidebarInset>
                 <SiteHeader />
-                <div className="bg-background flex flex-col h-full items-center justify-center gap-6 p-6 md:p-10">
-                    <div className="w-full max-w-sm">
-                        <LoginForm />
-                    </div>
-                </div>
+                <HomePage />
             </SidebarInset>
         </SidebarProvider>
     )
