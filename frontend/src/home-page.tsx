@@ -24,51 +24,68 @@ const Actions = {
   },
 }
 
-const Headers = ["actions", "id", "name", "barcode", "stock_quantity", "price", "category", "created_at"]
+const Headers = ["id", "title", "email", "username", "created_at"]
+
+interface Password {
+  id: number
+  title: string
+  email: string
+  username: string | null
+  password: string
+  logo: string | null
+  fa_code: string | null
+  created_at: string
+  user_id: number
+}
 
 export function HomePage() {
-  const [Data, setData] = useState<{ id: number; name: string; barcode: string; stock_quantity: number; stock_quantity_type: string; price: number; created_at: string; category: string; }[]>([]);
-  const [category, setCategory] = useState<{ id: number; name: string; count: number; }[]>([]);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  type SearchField = "id" | "name" | "barcode" | "stock_quantity" | "stock_quantity_type" | "price" | "category";
-  const [searchField, setSearchField] = useState<SearchField>("name");
+  const [Data, setData] = useState<Password[]>([])
+  const [searchQuery, setSearchQuery] = useState("")
+  type SearchField = "id" | "title" | "email" | "username" | "created_at"
+  const [searchField, setSearchField] = useState<SearchField>("title")
 
   useEffect(() => {
-    fetch("http://localhost:8000/products/list")
-      .then((res) => res.json())
-      .then((data) => setData(data as {
-        id: number;
-        name: string;
-        barcode: string;
-        stock_quantity: number;
-        stock_quantity_type: string;
-        price: number;
-        category: string;
-        created_at: string;
-      }[]))
-      .catch((err) => console.error(err));
-  }, []);
+    const fetchPasswords = async () => {
+      try {
+        const secret = localStorage.getItem("auth_secret")
+        const masterPassword = localStorage.getItem("auth_password")
+        
+        if (!secret || !masterPassword) return
 
-  useEffect(() => {
-    fetch("http://localhost:8000/categories/list")
-      .then((res) => res.json())
-      .then((data) => setCategory(data as { id: number; name: string; count: number; }[]))
-      .catch((err) => console.error(err));
-  }, []);
+        const response = await fetch(
+          `http://localhost:8000/api/v1/passwords?secret=${encodeURIComponent(secret)}&master_password=${encodeURIComponent(masterPassword)}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
+
+        if (response.ok) {
+          const data = await response.json()
+          setData(Array.isArray(data) ? data : data.data || [])
+        }
+      } catch (err) {
+        console.error("Failed to fetch passwords:", err)
+      }
+    }
+
+    fetchPasswords()
+  }, [])
 
   const filteredData = Data.filter((item) => {
-    const value = item[searchField];
-    const matchesCategory = selectedCategory === "all" || item.category === selectedCategory;
+    const searchValue = item[searchField]
+    if (!searchValue) return false
 
-    if (typeof value === "string") {
-      return value.toLowerCase().includes(searchQuery.toLowerCase()) && matchesCategory;
+    if (typeof searchValue === "string") {
+      return searchValue.toLowerCase().includes(searchQuery.toLowerCase())
     }
-    if (typeof value === "number") {
-      return value.toString().includes(searchQuery) && matchesCategory;
+    if (typeof searchValue === "number") {
+      return searchValue.toString().includes(searchQuery)
     }
-    return false;
-  });
+    return false
+  })
 
   return (
     <>
@@ -79,7 +96,7 @@ export function HomePage() {
               <div className="h-9 w-full flex gap-2">
                 <Input
                   type="text"
-                  placeholder=""
+                  placeholder="Search passwords..."
                   className="h-full rounded-md border shadow-sm pl-3"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
@@ -94,35 +111,17 @@ export function HomePage() {
                   <SelectContent>
                     <SelectGroup>
                       {Headers.map((item, index) => (
-                        ["actions", "created_at"].includes(item)
+                        item === "created_at"
                           ? null
                           : <SelectItem key={index} value={item}>{item}</SelectItem>
                       ))}
                     </SelectGroup>
                   </SelectContent>
                 </Select>
-                <Select
-                  value={selectedCategory}
-                  onValueChange={(value) => setSelectedCategory(value)}
-                >
-                  <SelectTrigger className="h-full rounded-md border shadow-sm pl-3">
-                    <SelectValue placeholder="" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectItem value="all">All</SelectItem>
-                      {category.map((item, index) => (
-                        <SelectItem key={index} value={item.name}>{item.name}</SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
               </div>
-              <a href="/main/items/add">
-                <Button className="h-[2.15rem] w-full cursor-pointer rounded-md">
-                  <span className="select-none">Add New Password</span>
-                </Button>
-              </a>
+              <Button className="h-[2.15rem] w-full cursor-pointer rounded-md">
+                <span className="select-none">Add New Password</span>
+              </Button>
             </div>
             <DataTable
               Data={filteredData}
