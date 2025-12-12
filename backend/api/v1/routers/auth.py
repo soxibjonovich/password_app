@@ -24,7 +24,12 @@ async def login(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect secret or password"
         )
-    return user
+    return {
+        "secret": user.secret,
+        "username": user.username,
+        "full_name": user.full_name,
+        "passwords": user.passwords
+    }
 
 @auth_router.post("/logout")
 async def logout():
@@ -37,7 +42,7 @@ async def create_user(
     db: AsyncSession = Depends(get_db)
 ):
     """Register a new user with secret and master password"""
-    db_user = await user_crud.get_user_by_secret(db, secret=user.secret)
+    db_user = await user_crud.get_user_by_secret(db, secret=user.secret.strip())
     if db_user:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
