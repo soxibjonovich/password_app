@@ -30,12 +30,12 @@ async def authenticate_user(db: AsyncSession, email: str, password: str) -> User
         return None
     return user
 
-async def authenticate_user_secret(db: AsyncSession, secret: str, password: str) -> User | None:
+async def authenticate_user_secret(db: AsyncSession, secret: str) -> User | None:
     """Authenticate user with email and password"""
     user = await get_user_by_secret(db, secret)
     if not user:
         return None
-    if not verify_password(password, user.hashed_password):
+    if not secret == user.secret:
         return None
     return user
 
