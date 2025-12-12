@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from .routers import auth
+from .routers import auth, passwords
 
 app = FastAPI(
     title="Local Password Application",
@@ -7,3 +7,4 @@ app = FastAPI(
 )
 
 app.include_router(auth.auth_router)
+app.include_router(passwords.password_router)

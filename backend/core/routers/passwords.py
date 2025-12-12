@@ -11,11 +11,10 @@ password_router = APIRouter(
 )
 
 password_router.get("/", response_model=GetUserPasswods)
-
-
 async def get_user_passwords(data: GetUserPasswods) -> User | None:
     for user in USERS:
         if user.secret == data.secret:
             return user
+
 
     # return HTTPException()
