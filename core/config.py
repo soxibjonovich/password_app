@@ -1,4 +1,4 @@
-from routers.models import User
+from core.routers.models import User
 
 USERS: list[User] = [
     
