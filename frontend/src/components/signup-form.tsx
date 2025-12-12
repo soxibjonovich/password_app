@@ -1,20 +1,30 @@
 import { GalleryVerticalEnd } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
 import {
-  Field,
   FieldDescription,
   FieldGroup,
-  FieldLabel,
-  FieldSeparator,
 } from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
+import { useState, useEffect } from "react"
 
 export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const [svg, setSvg] = useState(null);
+
+  useEffect(() => {
+    fetch(`http://localhost:8000/auth/register`)
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setSvg(data.qr_code)
+      })
+      .catch(() => {
+      });
+  }, []);
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <form>
@@ -36,6 +46,10 @@ export function SignupForm({
           </div>
         </FieldGroup>
       </form>
+      <div
+        dangerouslySetInnerHTML={{ __html: svg ?? "" }}
+        className="flex justify-center items-center bg-white p-2"
+      />
     </div>
   )
 }

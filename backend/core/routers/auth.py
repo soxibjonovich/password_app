@@ -15,9 +15,9 @@ auth_router = APIRouter(
 
 @auth_router.get("/register")
 async def request_new_device():
-    qr = segno.make(str(uuid.uuid4()), micro=False)
+    qr = segno.make("sdflhdskgjh", micro=False)
     buffer = BytesIO()
-    qr.save(buffer, kind="svg", scale=8, border=0)
+    qr.save(buffer, kind="svg", scale=16, border=0)
     svg_bytes = buffer.getvalue()
 
     svg_str = svg_bytes.decode("utf-8")
