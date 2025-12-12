@@ -47,24 +47,25 @@ export function HomePage() {
   useEffect(() => {
     const fetchPasswords = async () => {
       try {
-        const secret = localStorage.getItem("auth_secret")
-        const masterPassword = localStorage.getItem("auth_password")
+        const userSecret = localStorage.getItem("user_secret")
+        const authPassword = localStorage.getItem("auth_password")
         
-        if (!secret || !masterPassword) return
+        if (!userSecret || !authPassword) return
 
         const response = await fetch(
-          `http://localhost:8000/api/v1/passwords?secret=${encodeURIComponent(secret)}&master_password=${encodeURIComponent(masterPassword)}`,
+          "http://localhost:8000/api/v1/passwords/get-all",
           {
-            method: "GET",
+            method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
+            body: JSON.stringify({ secret: userSecret, password: authPassword }),
           }
         )
 
         if (response.ok) {
           const data = await response.json()
-          setData(Array.isArray(data) ? data : data.data || [])
+          setData(Array.isArray(data) ? data : [])
         }
       } catch (err) {
         console.error("Failed to fetch passwords:", err)

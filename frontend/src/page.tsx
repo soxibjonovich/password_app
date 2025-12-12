@@ -12,8 +12,9 @@ export default function Page() {
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
-        const token = localStorage.getItem("auth_token")
-        if (token) {
+        const authEmail = localStorage.getItem("auth_email")
+        const authPassword = localStorage.getItem("auth_password")
+        if (authEmail && authPassword) {
             setIsAuthenticated(true)
         }
         setIsLoading(false)
@@ -37,8 +38,10 @@ export default function Page() {
             }
         >
             <SidebarInset>
-                <SiteHeader />
-                <HomePage />
+                <div className="p-4">
+                    <SiteHeader />
+                    <HomePage />
+                </div>
             </SidebarInset>
         </SidebarProvider>
     )

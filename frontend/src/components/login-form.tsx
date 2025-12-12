@@ -14,8 +14,8 @@ export function LoginForm({
   className,
   onLoginSuccess,
   ...props
-}: React.ComponentProps<"div"> & { onLoginSuccess: (secret: string) => void }) {
-  const [secret, setSecret] = useState("")
+}: React.ComponentProps<"div"> & { onLoginSuccess: (email: string) => void }) {
+  const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
@@ -31,24 +31,25 @@ export function LoginForm({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ secret, password }),
+        body: JSON.stringify({ email, password }),
       })
 
       if (!response.ok) {
         const errorData = await response.json()
-        setError(errorData.detail || "Invalid secret or password")
+        setError(errorData.detail || "Invalid email or password")
         setIsLoading(false)
         return
       }
 
       const data = await response.json()
-      localStorage.setItem("auth_secret", secret)
+      localStorage.setItem("auth_email", email)
       localStorage.setItem("auth_password", password)
       localStorage.setItem("user_id", data.id)
-      onLoginSuccess(secret)
+      localStorage.setItem("user_secret", data.secret)
+      onLoginSuccess(email)
     } catch (err) {
-      setError("Failed to connect to server")
-      console.error(err)
+      console.error("Connection error:", err)
+      setError("Failed to connect to server. Make sure the backend is running on http://localhost:8000")
     } finally {
       setIsLoading(false)
     }
@@ -71,22 +72,22 @@ export function LoginForm({
             <h1 className="text-xl font-bold">Welcome to LocalPass</h1>
           </div>
           <Field>
-            <FieldLabel htmlFor="secret">Secret</FieldLabel>
+            <FieldLabel htmlFor="email">Email</FieldLabel>
             <Input
-              id="secret"
-              type="text"
-              placeholder="your_secret_key"
-              value={secret}
-              onChange={(e) => setSecret(e.target.value)}
+              id="email"
+              type="email"
+              placeholder="m@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </Field>
           <Field>
-            <FieldLabel htmlFor="password">Master Password</FieldLabel>
+            <FieldLabel htmlFor="password">Password</FieldLabel>
             <Input
               id="password"
               type="password"
-              placeholder="your_master_password"
+              placeholder="your_password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
