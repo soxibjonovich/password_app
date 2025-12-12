@@ -4,7 +4,8 @@ from datetime import datetime
 
 class RegisterNewDevice(BaseModel):
     secret: str
-    
+
+
 class Password(BaseModel):
     title: str
     logo: str | None
@@ -12,8 +13,8 @@ class Password(BaseModel):
     username: str | None
     password: str
     fa_code: str | None
-    
-    
+
+
 class User(BaseModel):
     secret: str
     passwords: list[Password]
