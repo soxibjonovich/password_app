@@ -97,7 +97,7 @@ export function AddPasswordDialog({ onPasswordAdded }: AddPasswordDialogProps) {
           <span className="select-none">Add a New Password</span>
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-106.25">
         <DialogHeader>
           <DialogTitle>Add New Password</DialogTitle>
           <DialogDescription>
