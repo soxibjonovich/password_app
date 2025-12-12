@@ -3,17 +3,22 @@ from datetime import datetime
 
 
 class UserBase(BaseModel):
-    secret: str
     username: str | None = None
     full_name: str | None = None
 
+class User(UserBase):
+    email: str
+    secret: str
+
+    model_config = ConfigDict(from_attributes=True)
 
 class UserCreate(UserBase):
+    email: str
     password: str  # Plain text password (will be hashed)
 
 
 class UserLogin(BaseModel):
-    secret: str
+    email: str
     password: str
 
 
@@ -36,4 +41,3 @@ class UserWithPasswordsResponse(UserResponse):
 
 class GetUserBySecret(BaseModel):
     secret: str
-    password: str  # Master password required to decrypt passwords

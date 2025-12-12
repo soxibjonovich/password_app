@@ -1,3 +1,5 @@
+import uuid
+
 from fastapi import APIRouter, Depends, HTTPException, status
 
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -18,19 +20,13 @@ async def login(
         db: AsyncSession = Depends(get_db),
 ):
     """Log user in"""
-    user = await user_crud.authenticate_user(db, credentials.secret, credentials.password)
+    user = await user_crud.authenticate_user(db, credentials.email, credentials.password)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect secret or password"
         )
-    return {
-        "secret": user.secret,
-        "username": user.username,
-        "full_name": user.full_name,
-        "passwords": user.passwords
-    }
-
+    return user_schema.User.model_validate(user)
 @auth_router.post("/logout")
 async def logout():
     ...
@@ -42,7 +38,7 @@ async def create_user(
     db: AsyncSession = Depends(get_db)
 ):
     """Register a new user with secret and master password"""
-    db_user = await user_crud.get_user_by_secret(db, secret=user.secret.strip())
+    db_user = await user_crud.get_user_by_email(db, email=user.email)
     if db_user:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,

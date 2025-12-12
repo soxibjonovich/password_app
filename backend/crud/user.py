@@ -1,3 +1,5 @@
+import uuid
+
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from sqlalchemy.orm import selectinload
@@ -15,16 +17,27 @@ async def get_user_by_secret(db: AsyncSession, secret: str) -> User | None:
     result = await db.execute(select(User).where(User.secret == secret))
     return result.scalar_one_or_none()
 
+async def get_user_by_email(db: AsyncSession, email: str) -> User | None:
+    result = await db.execute(select(User).where(User.email == email))
+    return result.scalar_one_or_none()
 
-async def authenticate_user(db: AsyncSession, secret: str, password: str) -> User | None:
-    """Authenticate user with secret and password"""
-    user = await get_user_by_secret(db, secret)
+async def authenticate_user(db: AsyncSession, email: str, password: str) -> User | None:
+    """Authenticate user with email and password"""
+    user = await get_user_by_email(db, email)
     if not user:
         return None
     if not verify_password(password, user.hashed_password):
         return None
     return user
 
+async def authenticate_user_secret(db: AsyncSession, secret: str, password: str) -> User | None:
+    """Authenticate user with email and password"""
+    user = await get_user_by_secret(db, secret)
+    if not user:
+        return None
+    if not verify_password(password, user.hashed_password):
+        return None
+    return user
 
 async def get_user_with_passwords(db: AsyncSession, user_id: int) -> User | None:
     result = await db.execute(
@@ -47,8 +60,9 @@ async def get_user_with_passwords_by_secret(db: AsyncSession, secret: str) -> Us
 async def create_user(db: AsyncSession, user: UserCreate) -> User:
     hashed_password = hash_password(user.password)
     db_user = User(
-        secret=user.secret,
+        secret=uuid.uuid4().hex,
         username=user.username,
+        email=user.email,
         full_name=user.full_name,
         hashed_password=hashed_password
     )

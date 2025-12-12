@@ -10,7 +10,7 @@ async def get_password(db: AsyncSession, password_id: int) -> Password | None:
     return result.scalar_one_or_none()
 
 
-async def get_user_passwords(db: AsyncSession, user_id: int) -> list[Password]:
+async def get_user_passwords(db: AsyncSession, user_id: int) -> list[Password] | None:
     result = await db.execute(select(Password).where(Password.user_id == user_id))
     return list(result.scalars().all())
 
