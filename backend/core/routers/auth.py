@@ -1,8 +1,8 @@
 import uuid
 from fastapi import APIRouter
 from fastapi.exceptions import HTTPException
-from .models import RegisterNewDevice
-from ..config import USERS
+from backend.core.routers.models import RegisterNewDevice
+from backend.core.config import USERS
 
 from io import BytesIO
 import segno
