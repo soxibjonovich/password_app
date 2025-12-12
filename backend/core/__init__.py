@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from core.routers import auth
+from .routers import auth
 
 app = FastAPI(
     title="Local Password Application",

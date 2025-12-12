@@ -2,7 +2,7 @@ import uuid
 from fastapi import APIRouter
 from fastapi.exceptions import HTTPException
 from .models import RegisterNewDevice
-from core.config import USERS
+from .config import USERS
 
 auth_router = APIRouter(
     prefix="/auth",
