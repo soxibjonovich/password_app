@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from datetime import datetime
 
 
@@ -8,20 +8,20 @@ class RegisterNewDevice(BaseModel):
 
 class Password(BaseModel):
     title: str
-    logo: str | None
+    logo: str | None = None
     email: str
-    username: str | None
+    username: str | None = None
     password: str
-    fa_code: str | None
+    fa_code: str | None = None
 
 
 class User(BaseModel):
     secret: str
-    username: str | None
-    full_name: str | None
+    username: str | None = None
+    full_name: str | None = None
     passwords: list[Password]
-    created_at: datetime = datetime.now()
+    created_at: datetime = Field(default_factory=datetime.now)
 
 
-class GetUserPasswods(BaseModel):
+class GetUserPasswords(BaseModel):
     secret: str

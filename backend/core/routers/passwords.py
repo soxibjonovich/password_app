@@ -1,8 +1,5 @@
-from http.client import HTTPException
-
-from fastapi import APIRouter
-
-from .models import GetUserPasswods, User
+from fastapi import APIRouter, HTTPException
+from .models import GetUserPasswords, User
 from ..config import USERS
 
 password_router = APIRouter(
@@ -10,11 +7,11 @@ password_router = APIRouter(
     tags=["Password"],
 )
 
-password_router.get("/", response_model=GetUserPasswods)
-async def get_user_passwords(data: GetUserPasswods) -> User | None:
+
+@password_router.post("", response_model=dict)
+async def get_user_passwords(data: GetUserPasswords):
     for user in USERS:
         if user.secret == data.secret:
-            return user
+            return {"user": user.model_dump_json()}
 
-
-    # return HTTPException()
+    raise HTTPException(detail="Not found", status_code=404)
