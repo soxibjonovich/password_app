@@ -7,7 +7,7 @@ from ..config import USERS
 
 password_router = APIRouter(
     prefix="/password",
-    tags=["password"],
+    tags=["Password"],
 )
 
 password_router.get("/", response_model=GetUserPasswods)
