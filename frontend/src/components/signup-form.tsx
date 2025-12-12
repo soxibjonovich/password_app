@@ -1,4 +1,4 @@
-import { GalleryVerticalEnd } from "lucide-react"
+import { KeyRound } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import {
@@ -35,11 +35,11 @@ export function SignupForm({
               className="flex flex-col items-center gap-2 font-medium"
             >
               <div className="flex size-8 items-center justify-center rounded-md">
-                <GalleryVerticalEnd className="size-6" />
+                <KeyRound className="size-6" />
               </div>
-              <span className="sr-only">Acme Inc.</span>
+              <span className="sr-only">Password App</span>
             </a>
-            <h1 className="text-xl font-bold">Welcome to Acme Inc.</h1>
+            <h1 className="text-xl font-bold">Welcome to the Password App</h1>
             <FieldDescription>
               Already have an account? <a href="#">Sign in</a>
             </FieldDescription>
