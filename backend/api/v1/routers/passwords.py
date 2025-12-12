@@ -16,7 +16,7 @@ async def get_user_passwords(
 ):
     """Get all passwords for a user (requires authentication)"""
     # Authenticate user
-    user = await user_crud.authenticate_user_secret(db, data.secret, data.password)
+    user = await user_crud.authenticate_user_secret(db, data.secret)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -41,12 +41,11 @@ async def get_user_passwords(
 async def create_password(
         password: password_schema.PasswordCreate,
         secret: str = Query(..., description="User secret"),
-        master_password: str = Query(..., description="Master password"),
         db: AsyncSession = Depends(get_db)
 ):
     """Create a new password entry (requires authentication)"""
     # Authenticate user
-    user = await user_crud.authenticate_user(db, secret, master_password)
+    user = await user_crud.authenticate_user_secret(db, secret)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -64,12 +63,11 @@ async def create_password(
 async def get_password(
         password_id: int,
         secret: str = Query(..., description="User secret"),
-        master_password: str = Query(..., description="Master password"),
         db: AsyncSession = Depends(get_db)
 ):
     """Get a specific password by ID (requires authentication)"""
     # Authenticate user
-    user = await user_crud.authenticate_user(db, secret, master_password)
+    user = await user_crud.authenticate_user_secret(db, secret)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -92,12 +90,11 @@ async def update_password(
         password_id: int,
         password: password_schema.PasswordUpdate,
         secret: str = Query(..., description="User secret"),
-        master_password: str = Query(..., description="Master password"),
         db: AsyncSession = Depends(get_db)
 ):
     """Update a password entry (requires authentication)"""
     # Authenticate user
-    user = await user_crud.authenticate_user(db, secret, master_password)
+    user = await user_crud.authenticate_user_secret(db, secret)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
