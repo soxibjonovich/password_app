@@ -1,11 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4d2e171b-6785-481b-b41d-7dc420efef89" name="Changes" comment="updating structure">
+    <list default="true" id="4d2e171b-6785-481b-b41d-7dc420efef89" name="Changes" comment="[upd] reformatting replacing some files">
+      <change afterPath="$PROJECT_DIR$/backend/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/api/v1/deps.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/api/v1/routers/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/api/v1/routers/auth.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/api/v1/routers/passwords.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/api/v1/routers/users.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/core/security.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/crud/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/crud/password.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/crud/user.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/models/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/models/password.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/models/user.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/schemas/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/schemas/password.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/schemas/user.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/core/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/core/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/core/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/core/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/core/routers/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/core/routers/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/core/routers/passwords.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/core/routers/passwords.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/core/routers/auth.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/core/routers/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/core/routers/passwords.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pyproject.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/uv.lock" beforeDir="false" afterPath="$PROJECT_DIR$/backend/uv.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/run.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,6 +67,7 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.run.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
@@ -52,6 +75,46 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;advanced.settings&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/backend/api/v1" />
+      <recent name="$PROJECT_DIR$/backend/core" />
+      <recent name="$PROJECT_DIR$/backend" />
+      <recent name="$PROJECT_DIR$/backend/api" />
+      <recent name="$PROJECT_DIR$/backend/core/routers/v1" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="run" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="password_app" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="RUN_TOOL" value="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/run.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.run" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -68,7 +131,7 @@
       <option name="presentableId" value="Default" />
       <updated>1765523427188</updated>
       <workItem from="1765523427701" duration="452000" />
-      <workItem from="1765524921965" duration="3134000" />
+      <workItem from="1765524921965" duration="8718000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <option name="closed" value="true" />
@@ -126,7 +189,23 @@
       <option name="project" value="LOCAL" />
       <updated>1765527487321</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="adding new router">
+      <option name="closed" value="true" />
+      <created>1765528331070</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1765528331070</updated>
+    </task>
+    <task id="LOCAL-00009" summary="[upd] reformatting replacing some files">
+      <option name="closed" value="true" />
+      <created>1765528641369</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1765528641369</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -156,6 +235,11 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="initial commit" />
     <MESSAGE value="updating structure" />
-    <option name="LAST_COMMIT_MESSAGE" value="updating structure" />
+    <MESSAGE value="adding new router" />
+    <MESSAGE value="[upd] reformatting replacing some files" />
+    <option name="LAST_COMMIT_MESSAGE" value="[upd] reformatting replacing some files" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/password_app$run.coverage" NAME="run Coverage Results" MODIFIED="1765549047238" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

@@ -1,7 +1,33 @@
-from fastapi import FastAPI
-from .routers import auth, passwords
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
+from sqlalchemy.orm import declarative_base
+from backend.core.config import settings
 
-app = FastAPI(title="Local Password Application", version="0.0.1")
+# Create async engine
+engine = create_async_engine(
+    settings.DATABASE_URL,
+    echo=settings.DATABASE_ECHO,
+    future=True
+)
 
-app.include_router(passwords.password_router, tags=["Password"])
-app.include_router(auth.auth_router)
+# Async session factory
+AsyncSessionLocal = async_sessionmaker(
+    engine,
+    class_=AsyncSession,
+    expire_on_commit=False,
+    autocommit=False,
+    autoflush=False
+)
+
+# Base class for models
+Base = declarative_base()
+
+
+async def init_db():
+    """Initialize database tables"""
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+
+
+async def close_db():
+    """Close database connection"""
+    await engine.dispose()
