@@ -17,5 +17,11 @@ class Password(BaseModel):
 
 class User(BaseModel):
     secret: str
+    username: str | None
+    full_name: str | None
     passwords: list[Password]
     created_at: datetime = datetime.now()
+
+
+class GetUserPasswods(BaseModel):
+    secret: str
