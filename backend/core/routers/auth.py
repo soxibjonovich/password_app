@@ -2,7 +2,10 @@ import uuid
 from fastapi import APIRouter
 from fastapi.exceptions import HTTPException
 from .models import RegisterNewDevice
-from .config import USERS
+from ..config import USERS
+
+from io import BytesIO
+import segno
 
 auth_router = APIRouter(
     prefix="/auth",
@@ -12,7 +15,13 @@ auth_router = APIRouter(
 
 @auth_router.get("/register")
 async def request_new_device():
-    return {"status": 200, "data": str(uuid.uuid4())}
+    qr = segno.make(str(uuid.uuid4()), micro=False)
+    buffer = BytesIO()
+    qr.save(buffer, kind="svg", scale=8, border=0)
+    svg_bytes = buffer.getvalue()
+
+    svg_str = svg_bytes.decode("utf-8")
+    return {"status": 200, "qr_code": svg_str}
 
 
 @auth_router.post("/register")
