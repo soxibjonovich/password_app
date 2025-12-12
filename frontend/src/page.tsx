@@ -38,7 +38,7 @@ export default function Page() {
             }
         >
             <SidebarInset>
-                <div className="p-4">
+                <div className="p-2">
                     <SiteHeader />
                     <HomePage />
                 </div>

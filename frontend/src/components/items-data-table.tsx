@@ -3,26 +3,12 @@
 import * as React from "react"
 import {
   type ColumnDef,
-  type ColumnFiltersState,
   flexRender,
   getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  type SortingState,
   useReactTable,
-  type VisibilityState,
 } from "@tanstack/react-table"
-import { ChevronDown } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Input } from "@/components/ui/input"
 import {
   Table,
   TableBody,
@@ -35,90 +21,97 @@ import {
 interface DataTableProps {
   Data: any[]
   Headers: string[]
+  Actions?: {
+    main: { Icon: React.ComponentType<any> }
+    cell: { Icon: React.ComponentType<any> }
+  }
+  onActionClick?: (passwordId: number) => void
 }
 
-export default function DataTable({ Data, Headers }: DataTableProps) {
-  const [sorting, setSorting] = React.useState<SortingState>([])
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  )
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({})
-  const [rowSelection, setRowSelection] = React.useState({})
-
+export default function DataTable({ Data, Headers, Actions, onActionClick }: DataTableProps) {
   // Dynamically generate columns based on Headers
   const columns: ColumnDef<any>[] = React.useMemo(() => {
-    return Headers.map((header) => ({
-      accessorKey: header,
-      header: header.charAt(0).toUpperCase() + header.slice(1).replace(/_/g, " "),
-      cell: ({ row }: any) => {
-        const value = row.getValue(header)
-        return <div>{String(value ?? "")}</div>
-      },
-    }))
-  }, [Headers])
+    return Headers.map((header) => {
+      // Special handling for actions column
+      if (header === "actions" && Actions) {
+        const MainIcon = Actions.main.Icon
+        const CellIcon = Actions.cell.Icon
+        
+        return {
+          accessorKey: header,
+          header: () => (
+            <Button variant="ghost" size="icon" className="h-8 w-8">
+              <MainIcon className="h-4 w-4" />
+            </Button>
+          ),
+          cell: ({ row }: any) => (
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8"
+              onClick={() => onActionClick?.(row.original.id)}
+            >
+              <CellIcon className="h-4 w-4" />
+            </Button>
+          ),
+        }
+      }
+      
+      return {
+        accessorKey: header,
+        header: header.charAt(0).toUpperCase() + header.slice(1).replace(/_/g, " "),
+        cell: ({ row }: any) => {
+          const value = row.getValue(header)
+          
+          // Format created_at timestamps
+          if (header === "created_at" && value) {
+            const date = new Date(value)
+            const formatted = date.toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'short',
+              day: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit',
+            })
+            return <div>{formatted}</div>
+          }
+          
+          // Display logo as image if URL is valid
+          if (header === "logo" && value && typeof value === 'string' && value.startsWith('http')) {
+            return (
+              <img
+                src={value}
+                alt="logo"
+                className="h-12 w-12 object-cover rounded-full"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none'
+                }}
+              />
+            )
+          }
+          
+          return <div>{String(value ?? "")}</div>
+        },
+      }
+    })
+  }, [Headers, Actions])
 
   const table = useReactTable({
     data: Data,
     columns,
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: setRowSelection,
-    state: {
-      sorting,
-      columnFilters,
-      columnVisibility,
-      rowSelection,
-    },
   })
 
   return (
     <div className="w-full">
-      <div className="flex items-center py-4">
-        <Input
-          placeholder="Search..."
-          className="max-w-sm"
-        />
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
-              Columns <ChevronDown />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                )
-              })}
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
       <div className="overflow-hidden rounded-md border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
+              <TableRow key={headerGroup.id} className="bg-muted/50 hover:bg-muted/50 h-14">
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead key={header.id} className="font-semibold text-foreground text-base">
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -134,12 +127,9 @@ export default function DataTable({ Data, Headers }: DataTableProps) {
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
+                <TableRow key={row.id} className="h-16">
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell key={cell.id} className="text-base">
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -160,30 +150,6 @@ export default function DataTable({ Data, Headers }: DataTableProps) {
             )}
           </TableBody>
         </Table>
-      </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="text-muted-foreground flex-1 text-sm">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
-        </div>
-        <div className="space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Next
-          </Button>
-        </div>
       </div>
     </div>
   )
