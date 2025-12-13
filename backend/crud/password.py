@@ -15,7 +15,9 @@ async def get_user_passwords(db: AsyncSession, user_id: int) -> list[Password] |
     return list(result.scalars().all())
 
 
-async def create_password(db: AsyncSession, password: PasswordCreate, user_id: int) -> Password:
+async def create_password(
+    db: AsyncSession, password: PasswordCreate, user_id: int
+) -> Password:
     # Encrypt the password before storing
     encrypted_pwd = encrypt_password(password.password)
 
@@ -26,7 +28,7 @@ async def create_password(db: AsyncSession, password: PasswordCreate, user_id: i
         email=password.email,
         username=password.username,
         encrypted_password=encrypted_pwd,
-        fa_code=password.fa_code
+        fa_code=password.fa_code,
     )
     db.add(db_password)
     await db.commit()
@@ -35,10 +37,7 @@ async def create_password(db: AsyncSession, password: PasswordCreate, user_id: i
 
 
 async def update_password(
-        db: AsyncSession,
-        password_id: int,
-        password: PasswordUpdate,
-        user_id: int
+    db: AsyncSession, password_id: int, password: PasswordUpdate, user_id: int
 ) -> Password | None:
     db_password = await get_password(db, password_id)
     if not db_password or db_password.user_id != user_id:
@@ -48,7 +47,9 @@ async def update_password(
 
     # Encrypt password if provided
     if "password" in update_data:
-        update_data["encrypted_password"] = encrypt_password(update_data.pop("password"))
+        update_data["encrypted_password"] = encrypt_password(
+            update_data.pop("password")
+        )
 
     for field, value in update_data.items():
         setattr(db_password, field, value)
@@ -79,5 +80,5 @@ def decrypt_password_for_response(password: Password) -> dict:
         "username": password.username,
         "password": decrypt_password(password.encrypted_password),  # Decrypt here
         "fa_code": password.fa_code,
-        "created_at": password.created_at
+        "created_at": password.created_at,
     }

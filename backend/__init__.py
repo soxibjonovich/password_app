@@ -18,7 +18,7 @@ app = FastAPI(
     title="Password Manager API",
     description="Async Password Manager with SQLAlchemy and aiosqlite",
     version="1.0.0",
-    lifespan=lifespan
+    lifespan=lifespan,
 )
 
 # Add CORS middleware

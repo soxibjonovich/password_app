@@ -14,32 +14,36 @@ auth_router = APIRouter(
 
 @auth_router.post("", response_model=user_schema.User)
 async def login(
-        credentials: user_schema.UserLogin,
-        db: AsyncSession = Depends(get_db),
+    credentials: user_schema.UserLogin,
+    db: AsyncSession = Depends(get_db),
 ):
     """Log user in"""
-    user = await user_crud.authenticate_user(db, credentials.email, credentials.password)
+    user = await user_crud.authenticate_user(
+        db, credentials.email, credentials.password
+    )
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect secret or password"
+            detail="Incorrect secret or password",
         )
     return user
+
+
 @auth_router.post("/logout")
-async def logout():
-    ...
+async def logout(): ...
 
 
-@auth_router.post("/register", response_model=user_schema.UserResponse, status_code=status.HTTP_201_CREATED)
-async def create_user(
-    user: user_schema.UserCreate,
-    db: AsyncSession = Depends(get_db)
-):
+@auth_router.post(
+    "/register",
+    response_model=user_schema.UserResponse,
+    status_code=status.HTTP_201_CREATED,
+)
+async def create_user(user: user_schema.UserCreate, db: AsyncSession = Depends(get_db)):
     """Register a new user with secret and master password"""
     db_user = await user_crud.get_user_by_email(db, email=user.email)
     if db_user:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="User with this secret already exists"
+            detail="User with this secret already exists",
         )
     return await user_crud.create_user(db=db, user=user)

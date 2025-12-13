@@ -12,9 +12,12 @@ class User(Base):
     username = Column(String(100), nullable=True)
     email = Column(String(255), nullable=True)
     full_name = Column(String(255), nullable=True)
-    hashed_password = Column(String(255), nullable=False)  # User's master password (hashed)
+    hashed_password = Column(
+        String(255), nullable=False
+    )  # User's master password (hashed)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
 
     # Relationship
-    passwords = relationship("Password", back_populates="user", cascade="all, delete-orphan")
-
+    passwords = relationship(
+        "Password", back_populates="user", cascade="all, delete-orphan"
+    )

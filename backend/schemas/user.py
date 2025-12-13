@@ -6,12 +6,14 @@ class UserBase(BaseModel):
     username: str | None = None
     full_name: str | None = None
 
+
 class User(UserBase):
     id: int
     email: str
     secret: str
 
     model_config = ConfigDict(from_attributes=True)
+
 
 class UserCreate(UserBase):
     email: str
@@ -37,7 +39,7 @@ class UserResponse(UserBase):
 
 
 class UserWithPasswordsResponse(UserResponse):
-    passwords: list['PasswordResponse'] = []
+    passwords: list["PasswordResponse"] = []
 
 
 class GetUserBySecret(BaseModel):

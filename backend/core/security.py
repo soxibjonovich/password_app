@@ -5,18 +5,17 @@ from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.hazmat.backends import default_backend
 from .config import settings
 import base64
-import hashlib
 
 # Password hashing context (for user passwords)
 pwd_context = CryptContext(
     schemes=["argon2"],
-    argon2__default_rounds=4,        # ~1 second on modern CPU
-    deprecated="auto"
+    argon2__default_rounds=4,  # ~1 second on modern CPU
+    deprecated="auto",
 )
+
 
 def hash_password(password: str) -> str:
     return pwd_context.hash(password)
-
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
@@ -32,7 +31,7 @@ def get_fernet_key() -> bytes:
         length=32,
         salt=b"static_salt_change_in_production",  # Use unique salt per app
         iterations=100000,
-        backend=default_backend()
+        backend=default_backend(),
     )
     key = base64.urlsafe_b64encode(kdf.derive(settings.SECRET_KEY.encode()))
     return key

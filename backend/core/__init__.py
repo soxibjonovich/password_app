@@ -4,9 +4,7 @@ from backend.core.config import settings
 
 # Create async engine
 engine = create_async_engine(
-    settings.DATABASE_URL,
-    echo=settings.DATABASE_ECHO,
-    future=True
+    settings.DATABASE_URL, echo=settings.DATABASE_ECHO, future=True
 )
 
 # Async session factory
@@ -15,7 +13,7 @@ AsyncSessionLocal = async_sessionmaker(
     class_=AsyncSession,
     expire_on_commit=False,
     autocommit=False,
-    autoflush=False
+    autoflush=False,
 )
 
 # Base class for models
