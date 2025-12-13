@@ -93,8 +93,8 @@ export function AddPasswordDialog({ onPasswordAdded }: AddPasswordDialogProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="cursor-pointer md:w-auto w-full">
-          <span className="select-none">Add a New Password</span>
+        <Button size="sm" className="cursor-pointer md:size-auto md:px-4 md:py-2 w-full sm:w-auto">
+          <span className="select-none">Add Password</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-106.25">

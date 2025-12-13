@@ -82,7 +82,7 @@ export default function DataTable({ Data, Headers, Actions, onActionClick }: Dat
               <img
                 src={value}
                 alt="logo"
-                className="h-12 w-12 object-cover rounded-full"
+                className="h-12 w-12 object-contain rounded-full"
                 onError={(e) => {
                   e.currentTarget.style.display = 'none'
                 }}

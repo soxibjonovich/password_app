@@ -239,24 +239,24 @@ function DataTable({
 }) {
   return (
     <div className="rounded-lg border bg-card shadow-sm overflow-hidden">
-      {/* Desktop Table View */}
-      <div className="hidden md:block overflow-x-auto">
+      {/* Desktop Table View - md and up */}
+      <div className="hidden lg:block overflow-x-auto">
         <table className="w-full table-fixed">
           <thead className="border-b bg-muted/50">
             <tr>
-              <th className="w-20 px-4 py-5 align-middle">
+              <th className="w-16 px-2 py-3 align-middle">
                 <div className="flex items-center justify-center h-full">
-                  <List className="h-4.5 w-4.5 text-muted-foreground flex-shrink-0" />
+                  <List className="h-4 w-4 text-muted-foreground flex-shrink-0" />
                 </div>
               </th>
-              <th className="w-28 px-4 py-5 text-left text-sm font-medium text-muted-foreground align-middle">
+              <th className="w-20 px-2 py-3 text-left text-xs font-medium text-muted-foreground align-middle">
                 Logo
               </th>
-              <th className="px-6 py-5 text-left text-sm font-medium text-muted-foreground align-middle">
+              <th className="px-3 py-3 text-left text-xs font-medium text-muted-foreground align-middle">
                 Title
               </th>
-              <th className="w-40 px-6 py-5 text-left text-sm font-medium text-muted-foreground align-middle">
-                Created At
+              <th className="w-28 px-3 py-3 text-left text-xs font-medium text-muted-foreground align-middle">
+                Created
               </th>
             </tr>
           </thead>
@@ -277,39 +277,39 @@ function DataTable({
                   onClick={() => onRowClick(item)}
                   className="hover:bg-muted/50 transition-all duration-200 cursor-pointer hover:shadow-sm"
                 >
-                  <td className="w-20 px-4 py-5 align-middle">
+                  <td className="w-16 px-2 py-3 align-middle">
                     <div className="flex items-center justify-center">
                       <button
                         onClick={(e) => {
                           e.stopPropagation()
                           onActionClick(item.id)
                         }}
-                        className="inline-flex items-center justify-center rounded-md p-2.5 hover:bg-muted transition-all duration-200 flex-shrink-0 hover:scale-110 active:scale-95"
+                        className="inline-flex items-center justify-center rounded-md p-1.5 hover:bg-muted transition-all duration-200 flex-shrink-0 hover:scale-110 active:scale-95"
                         aria-label="Edit password"
                       >
-                        <Pen className="h-3.5 w-3.5 text-muted-foreground hover:text-foreground" />
+                        <Pen className="h-3 w-3 text-muted-foreground hover:text-foreground" />
                       </button>
                     </div>
                   </td>
-                  <td className="w-28 px-4 py-5 align-middle">
+                  <td className="w-20 px-2 py-3 align-middle">
                     <div className="flex items-center">
                       {item.logo ? (
                         <img
                           src={item.logo}
                           alt={item.title}
-                          className="h-10 w-10 rounded-lg object-conatain flex-shrink-0"
+                          className="h-8 w-8 rounded-lg object-conatain flex-shrink-0"
                         />
                       ) : (
-                        <div className="flex h-10 w-10 items-center justify-center rounded-md bg-primary/10 flex-shrink-0">
-                          <span className="text-sm font-semibold text-primary">
+                        <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10 flex-shrink-0">
+                          <span className="text-xs font-semibold text-primary">
                             {item.title.charAt(0).toUpperCase()}
                           </span>
                         </div>
                       )}
                     </div>
                   </td>
-                  <td className="px-6 py-5 font-medium align-middle">{item.title}</td>
-                  <td className="w-40 px-6 py-5 text-sm text-muted-foreground align-middle">
+                  <td className="px-3 py-3 font-medium align-middle text-xs truncate">{item.title}</td>
+                  <td className="w-28 px-3 py-3 text-xs text-muted-foreground align-middle">
                     {new Date(item.created_at).toLocaleDateString()}
                   </td>
                 </tr>
@@ -319,8 +319,8 @@ function DataTable({
         </table>
       </div>
 
-      {/* Mobile Card View */}
-      <div className="md:hidden divide-y">
+      {/* Mobile Card View - up to lg */}
+      <div className="lg:hidden divide-y">
         {data.length === 0 ? (
           <div className="px-4 py-12 text-center text-sm text-muted-foreground">
             No passwords found. Add your first password to get started.
@@ -330,25 +330,25 @@ function DataTable({
             <div
               key={item.id}
               onClick={() => onRowClick(item)}
-              className="p-4 hover:bg-muted/50 transition-all duration-200 cursor-pointer active:bg-muted"
+              className="p-3 sm:p-4 hover:bg-muted/50 transition-all duration-200 cursor-pointer active:bg-muted"
             >
-              <div className="flex items-center justify-between gap-3">
-                <div className="flex items-center gap-3 min-w-0 flex-1">
+              <div className="flex items-center justify-between gap-2 sm:gap-3">
+                <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
                   {item.logo ? (
                     <img
                       src={item.logo}
                       alt={item.title}
-                      className="h-12 w-12 rounded-md object-cover flex-shrink-0"
+                      className="h-9 w-9 sm:h-12 sm:w-12 rounded-md object-contain flex-shrink-0"
                     />
                   ) : (
-                    <div className="flex h-12 w-12 items-center justify-center rounded-md bg-primary/10 flex-shrink-0">
-                      <span className="text-base font-semibold text-primary">
+                    <div className="flex h-9 w-9 sm:h-12 sm:w-12 items-center justify-center rounded-md bg-primary/10 flex-shrink-0">
+                      <span className="text-xs sm:text-base font-semibold text-primary">
                         {item.title.charAt(0).toUpperCase()}
                       </span>
                     </div>
                   )}
                   <div className="min-w-0 flex-1">
-                    <p className="font-medium truncate">{item.title}</p>
+                    <p className="text-sm sm:text-base font-medium truncate">{item.title}</p>
                     <p className="text-xs text-muted-foreground">
                       {new Date(item.created_at).toLocaleDateString()}
                     </p>
@@ -359,10 +359,10 @@ function DataTable({
                     e.stopPropagation()
                     onActionClick(item.id)
                   }}
-                  className="inline-flex items-center justify-center rounded-md p-2.5 hover:bg-muted transition-all duration-200 flex-shrink-0 active:scale-95"
+                  className="inline-flex items-center justify-center rounded-md p-1.5 sm:p-2.5 hover:bg-muted transition-all duration-200 flex-shrink-0 active:scale-95"
                   aria-label="Edit password"
                 >
-                  <Pen className="h-3.5 w-3.5 text-muted-foreground" />
+                  <Pen className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-muted-foreground" />
                 </button>
               </div>
             </div>
@@ -431,38 +431,40 @@ export function HomePage() {
       <div className="flex-1 overflow-y-auto">
         <div className="container mx-auto max-w-10xl px-3 py-4 sm:px-4 sm:py-6 md:px-6 md:py-8 lg:px-8">
           {/* Header Section */}
-          <div className="flex justify-between items-start mb-6">
-            <div className="animate-in slide-in-from-top-4 duration-500">
-              <div className="w-16 h-16 mb-2 relative">
+          <div className="flex justify-between items-start gap-3 sm:gap-4 mb-5 sm:mb-6">
+            <div className="animate-in slide-in-from-top-4 duration-500 flex-1">
+              <div className="w-12 h-12 sm:w-16 sm:h-16 mb-2 relative">
                 <img
                   src="/white_mode.png"
                   alt="LocalPass Logo"
-                  className="w-16 h-16 absolute inset-0 block dark:hidden"
+                  className="w-12 h-12 sm:w-16 sm:h-16 absolute inset-0 block dark:hidden"
                 />
                 <img
                   src="/dark_mode.png"
                   alt="LocalPass Logo dark"
-                  className="w-16 h-16 absolute inset-0 hidden dark:block"
+                  className="w-12 h-12 sm:w-16 sm:h-16 absolute inset-0 hidden dark:block"
                 />
               </div>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-1 sm:mb-2">
+              <h1 className="text-xl sm:text-3xl font-bold tracking-tight mb-0.5 sm:mb-2">
                 LocalPass
               </h1>
-              <p className="text-sm sm:text-base text-muted-foreground">
-                Manage and secure all your passwords in one place
+              <p className="text-xs sm:text-base text-muted-foreground">
+                Manage and secure all your passwords
               </p>
             </div>
-            <ModeToggle />
+            <div className="flex-shrink-0 mt-1">
+              <ModeToggle />
+            </div>
           </div>
 
           {/* Search and Add Section */}
-          <div className="mb-4 sm:mb-6 flex flex-col gap-3 sm:gap-4 sm:flex-row sm:items-center animate-in slide-in-from-top-4 duration-500 delay-100">
+          <div className="mb-4 sm:mb-6 flex flex-col gap-2 sm:gap-3 sm:flex-row sm:items-center animate-in slide-in-from-top-4 duration-500 delay-100">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground pointer-events-none" />
               <Input
                 type="text"
-                placeholder="Search passwords..."
-                className="pl-10 h-10 sm:h-11"
+                placeholder="Search..."
+                className="pl-10 h-9 sm:h-10"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
