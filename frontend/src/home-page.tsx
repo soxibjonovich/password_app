@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input"
 import { useEffect, useState } from "react"
 import { Pen, List, Search, X, Copy, Eye, EyeOff, Mail, User, Calendar, Shield } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { ModeToggle } from "@/components/mode-toggle"
 
 interface Password {
   id: number
@@ -39,11 +40,11 @@ function PasswordDetailModal({
   }
 
   return (
-    <div 
+    <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-2 sm:p-4 animate-in fade-in duration-200"
       onClick={onClose}
     >
-      <div 
+      <div
         className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-lg bg-card shadow-lg animate-in zoom-in-95 slide-in-from-bottom-4 duration-300"
         onClick={(e) => e.stopPropagation()}
       >
@@ -213,8 +214,8 @@ function PasswordDetailModal({
 
         {/* Footer */}
         <div className="sticky bottom-0 flex justify-end gap-2 border-t bg-card px-4 py-3 sm:px-6 sm:py-4">
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             onClick={onClose}
             className="transition-all duration-200 hover:scale-105 w-full sm:w-auto"
           >
@@ -426,27 +427,31 @@ export function HomePage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <div className="container mx-auto max-w-7xl px-3 py-4 sm:px-4 sm:py-6 md:px-6 md:py-8 lg:px-8">
+      <div className="container mx-auto max-w-10xl px-3 py-4 sm:px-4 sm:py-6 md:px-6 md:py-8 lg:px-8">
         {/* Header Section */}
-        <div className="mb-6 sm:mb-8 animate-in slide-in-from-top-4 duration-500">
-          <div className="w-16 h-16 mb-2 relative">
-            <img
-              src="/white_mode.png"
-              alt="LocalPass Logo"
-              className="w-16 h-16 absolute inset-0 block dark:hidden"
-            />
-            <img
-              src="/dark_mode.png"
-              alt="LocalPass Logo dark"
-              className="w-16 h-16 absolute inset-0 hidden dark:block"
-          />
+        <div className="flex justify-between">
+          <div className="mb-6 sm:mb-8 animate-in slide-in-from-top-4 duration-500">
+            <div className="w-16 h-16 mb-2 relative">
+              <img
+                src="/white_mode.png"
+                alt="LocalPass Logo"
+                className="w-16 h-16 absolute inset-0 block dark:hidden"
+              />
+              <img
+                src="/dark_mode.png"
+                alt="LocalPass Logo dark"
+                className="w-16 h-16 absolute inset-0 hidden dark:block"
+              />
+            </div>
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-1 sm:mb-2">
+              LocalPass
+            </h1>
+            <p className="text-sm sm:text-base text-muted-foreground">
+              Manage and secure all your passwords in one place
+            </p>
+
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-1 sm:mb-2">
-            LocalPass
-          </h1>
-          <p className="text-sm sm:text-base text-muted-foreground">
-            Manage and secure all your passwords in one place
-          </p>
+          <ModeToggle />
         </div>
 
         {/* Search and Add Section */}

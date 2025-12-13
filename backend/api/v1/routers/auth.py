@@ -12,7 +12,7 @@ auth_router = APIRouter(
 )
 
 
-@auth_router.post("")
+@auth_router.post("", response_model=user_schema.User)
 async def login(
         credentials: user_schema.UserLogin,
         db: AsyncSession = Depends(get_db),
@@ -24,7 +24,7 @@ async def login(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect secret or password"
         )
-    return user_schema.User.model_validate(user)
+    return user
 @auth_router.post("/logout")
 async def logout():
     ...
