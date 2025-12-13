@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4d2e171b-6785-481b-b41d-7dc420efef89" name="Changes" comment="updating structure">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/api/v2/routers/__init__.py" afterDir="false" />
-    </list>
+    <list default="true" id="4d2e171b-6785-481b-b41d-7dc420efef89" name="Changes" comment="[upd] creating new files for developing new log in logic" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -54,6 +49,8 @@
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "git-widget-placeholder": "dev",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
     "settings.editor.selected.configurable": "advanced.settings"
   }
 }]]></component>
@@ -131,7 +128,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765527487321</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="[upd] creating new files for developing new log in logic">
+      <option name="closed" value="true" />
+      <created>1765604874051</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1765604874051</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -161,6 +166,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="initial commit" />
     <MESSAGE value="updating structure" />
-    <option name="LAST_COMMIT_MESSAGE" value="updating structure" />
+    <MESSAGE value="[upd] creating new files for developing new log in logic" />
+    <option name="LAST_COMMIT_MESSAGE" value="[upd] creating new files for developing new log in logic" />
   </component>
 </project>
