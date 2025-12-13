@@ -123,12 +123,11 @@ async def update_password(
 async def delete_password(
     password_id: int,
     secret: str = Query(..., description="User secret"),
-    master_password: str = Query(..., description="Master password"),
     db: AsyncSession = Depends(get_db),
 ):
     """Delete a password entry (requires authentication)"""
     # Authenticate user
-    user = await user_crud.authenticate_user(db, secret, master_password)
+    user = await user_crud.authenticate_user_secret(db, secret)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
