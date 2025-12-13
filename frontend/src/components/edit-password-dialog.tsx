@@ -64,7 +64,7 @@ export function EditPasswordDialog({
       }
 
       const response = await fetch(
-        "http://localhost:8000/api/v1/passwords/get-all",
+        "/api/v1/passwords/get-all",
         {
           method: "POST",
           headers: {
@@ -122,7 +122,7 @@ export function EditPasswordDialog({
       }
 
       const response = await fetch(
-        `http://localhost:8000/api/v1/passwords/${passwordId}?secret=${encodeURIComponent(userSecret)}`,
+        `/api/v1/passwords/${passwordId}?secret=${encodeURIComponent(userSecret)}`,
         {
           method: "PATCH",
           headers: {
@@ -172,7 +172,7 @@ export function EditPasswordDialog({
       }
 
       const response = await fetch(
-        `http://localhost:8000/api/v1/passwords/${passwordId}?secret=${encodeURIComponent(userSecret)}`,
+        `/api/v1/passwords/${passwordId}?secret=${encodeURIComponent(userSecret)}`,
         {
           method: "DELETE",
           headers: {

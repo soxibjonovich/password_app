@@ -48,7 +48,7 @@ export function AddPasswordDialog({ onPasswordAdded }: AddPasswordDialogProps) {
       }
 
       const response = await fetch(
-        `http://localhost:8000/api/v1/passwords?secret=${encodeURIComponent(userSecret)}`,
+        `/api/v1/passwords?secret=${encodeURIComponent(userSecret)}`,
         {
           method: "POST",
           headers: {

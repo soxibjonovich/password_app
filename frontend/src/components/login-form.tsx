@@ -26,7 +26,7 @@ export function LoginForm({
     setIsLoading(true)
 
     try {
-      const response = await fetch("http://localhost:8000/api/v1/auth", {
+      const response = await fetch("/api/v1/auth", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
