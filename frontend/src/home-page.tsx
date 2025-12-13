@@ -41,7 +41,7 @@ function PasswordDetailModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-2 sm:p-4 animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-3 sm:p-4 animate-in fade-in duration-200"
       onClick={onClose}
     >
       <div
@@ -50,7 +50,7 @@ function PasswordDetailModal({
       >
         {/* Header */}
         <div className="sticky top-0 z-10 flex items-center justify-between border-b bg-card px-4 py-3 sm:px-6 sm:py-4">
-          <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+          <div className="flex items-center gap-3 sm:gap-4 min-w-0 flex-1 mr-2">
             {password.logo ? (
               <img
                 src={password.logo}
@@ -64,17 +64,17 @@ function PasswordDetailModal({
                 </span>
               </div>
             )}
-            <div className="min-w-0">
-              <h2 className="text-lg sm:text-2xl font-bold truncate">{password.title}</h2>
+            <div className="min-w-0 flex-1">
+              <h2 className="text-base sm:text-xl md:text-2xl font-bold truncate">{password.title}</h2>
               <p className="text-xs sm:text-sm text-muted-foreground">Password Details</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="rounded-md p-2.5 hover:bg-muted transition-all duration-200 hover:rotate-90 flex-shrink-0"
+            className="rounded-md p-2 hover:bg-muted transition-all duration-200 hover:rotate-90 flex-shrink-0"
             aria-label="Close"
           >
-            <X className="h-4.5 w-4.5" />
+            <X className="h-4 w-4 sm:h-5 sm:w-5" />
           </button>
         </div>
 
@@ -84,11 +84,11 @@ function PasswordDetailModal({
           {password.email && (
             <div className="rounded-lg border bg-muted/30 p-3 sm:p-4 animate-in slide-in-from-left-4 duration-300">
               <div className="mb-2 flex items-center gap-2 text-xs sm:text-sm font-medium text-muted-foreground">
-                <Mail className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
+                <Mail className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0" />
                 <span>Email</span>
               </div>
-              <div className="flex items-center justify-between gap-2 sm:gap-4">
-                <p className="font-mono text-xs sm:text-sm break-all">{password.email}</p>
+              <div className="flex items-center gap-2 sm:gap-3">
+                <p className="font-mono text-xs sm:text-sm break-all flex-1 min-w-0">{password.email}</p>
                 <Button
                   size="sm"
                   variant="ghost"
@@ -98,7 +98,7 @@ function PasswordDetailModal({
                   {copied === 'email' ? (
                     <span className="text-xs animate-in zoom-in-50 duration-200">✓</span>
                   ) : (
-                    <Copy className="h-3 w-3 sm:h-4 sm:w-4" />
+                    <Copy className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                   )}
                 </Button>
               </div>
@@ -109,11 +109,11 @@ function PasswordDetailModal({
           {password.username && (
             <div className="rounded-lg border bg-muted/30 p-3 sm:p-4 animate-in slide-in-from-left-4 duration-300 delay-75">
               <div className="mb-2 flex items-center gap-2 text-xs sm:text-sm font-medium text-muted-foreground">
-                <User className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
+                <User className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0" />
                 <span>Username</span>
               </div>
-              <div className="flex items-center justify-between gap-2 sm:gap-4">
-                <p className="font-mono text-xs sm:text-sm break-all">{password.username}</p>
+              <div className="flex items-center gap-2 sm:gap-3">
+                <p className="font-mono text-xs sm:text-sm break-all flex-1 min-w-0">{password.username}</p>
                 <Button
                   size="sm"
                   variant="ghost"
@@ -123,7 +123,7 @@ function PasswordDetailModal({
                   {copied === 'username' ? (
                     <span className="text-xs animate-in zoom-in-50 duration-200">✓</span>
                   ) : (
-                    <Copy className="h-3 w-3 sm:h-4 sm:w-4" />
+                    <Copy className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                   )}
                 </Button>
               </div>
@@ -133,14 +133,14 @@ function PasswordDetailModal({
           {/* Password */}
           <div className="rounded-lg border bg-muted/30 p-3 sm:p-4 animate-in slide-in-from-left-4 duration-300 delay-150">
             <div className="mb-2 flex items-center gap-2 text-xs sm:text-sm font-medium text-muted-foreground">
-              <Shield className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
+              <Shield className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0" />
               <span>Password</span>
             </div>
-            <div className="flex items-center justify-between gap-2">
-              <p className="font-mono text-xs sm:text-sm flex-1 break-all">
+            <div className="flex items-center gap-2">
+              <p className="font-mono text-xs sm:text-sm flex-1 min-w-0 break-all">
                 {showPassword ? password.password : '••••••••••••'}
               </p>
-              <div className="flex gap-1 sm:gap-2 flex-shrink-0">
+              <div className="flex gap-1 flex-shrink-0">
                 <Button
                   size="sm"
                   variant="ghost"
@@ -148,9 +148,9 @@ function PasswordDetailModal({
                   className="transition-all duration-200 hover:scale-110 h-8 w-8 sm:h-9 sm:w-9 p-0"
                 >
                   {showPassword ? (
-                    <EyeOff className="h-3 w-3 sm:h-4 sm:w-4 animate-in zoom-in-50 duration-200" />
+                    <EyeOff className="h-3.5 w-3.5 sm:h-4 sm:w-4 animate-in zoom-in-50 duration-200" />
                   ) : (
-                    <Eye className="h-3 w-3 sm:h-4 sm:w-4 animate-in zoom-in-50 duration-200" />
+                    <Eye className="h-3.5 w-3.5 sm:h-4 sm:w-4 animate-in zoom-in-50 duration-200" />
                   )}
                 </Button>
                 <Button
@@ -162,7 +162,7 @@ function PasswordDetailModal({
                   {copied === 'password' ? (
                     <span className="text-xs animate-in zoom-in-50 duration-200">✓</span>
                   ) : (
-                    <Copy className="h-3 w-3 sm:h-4 sm:w-4" />
+                    <Copy className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                   )}
                 </Button>
               </div>
@@ -173,11 +173,11 @@ function PasswordDetailModal({
           {password.fa_code && (
             <div className="rounded-lg border bg-muted/30 p-3 sm:p-4 animate-in slide-in-from-left-4 duration-300 delay-200">
               <div className="mb-2 flex items-center gap-2 text-xs sm:text-sm font-medium text-muted-foreground">
-                <Shield className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
+                <Shield className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0" />
                 <span>2FA Code</span>
               </div>
-              <div className="flex items-center justify-between gap-2 sm:gap-4">
-                <p className="font-mono text-xs sm:text-sm break-all">{password.fa_code}</p>
+              <div className="flex items-center gap-2 sm:gap-3">
+                <p className="font-mono text-xs sm:text-sm break-all flex-1 min-w-0">{password.fa_code}</p>
                 <Button
                   size="sm"
                   variant="ghost"
@@ -187,7 +187,7 @@ function PasswordDetailModal({
                   {copied === '2fa' ? (
                     <span className="text-xs animate-in zoom-in-50 duration-200">✓</span>
                   ) : (
-                    <Copy className="h-3 w-3 sm:h-4 sm:w-4" />
+                    <Copy className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                   )}
                 </Button>
               </div>
@@ -197,7 +197,7 @@ function PasswordDetailModal({
           {/* Created At */}
           <div className="rounded-lg border bg-muted/30 p-3 sm:p-4 animate-in slide-in-from-left-4 duration-300 delay-300">
             <div className="mb-2 flex items-center gap-2 text-xs sm:text-sm font-medium text-muted-foreground">
-              <Calendar className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
+              <Calendar className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0" />
               <span>Created</span>
             </div>
             <p className="text-xs sm:text-sm">
@@ -227,7 +227,7 @@ function PasswordDetailModal({
   )
 }
 
-// Inline DataTable component with improved styling
+// Inline DataTable component - Mobile Card View & Desktop Table
 function DataTable({
   data,
   onActionClick,
@@ -238,87 +238,135 @@ function DataTable({
   onRowClick: (password: Password) => void
 }) {
   return (
-    <div className="rounded-lg border bg-card shadow-sm overflow-hidden">
-      {/* Table View - Always visible and responsive */}
-      <div className="overflow-x-auto">
-        <table className="w-full">
-          <thead className="border-b bg-muted/50">
-            <tr>
-              <th className="w-16 px-4 py-4 align-middle">
-                <div className="flex items-center justify-center h-full">
-                  <List className="h-5 w-5 text-muted-foreground flex-shrink-0" />
-                </div>
-              </th>
-              <th className="w-24 px-4 py-4 text-left text-sm font-medium text-muted-foreground align-middle">
-                Logo
-              </th>
-              <th className="px-4 py-4 text-left text-sm font-medium text-muted-foreground align-middle">
-                Title
-              </th>
-              <th className="w-32 px-4 py-4 text-left text-sm font-medium text-muted-foreground align-middle">
-                Created
-              </th>
-            </tr>
-          </thead>
-          <tbody className="divide-y">
-            {data.length === 0 ? (
+    <>
+      {/* Desktop Table View */}
+      <div className="hidden sm:block rounded-lg border bg-card shadow-sm overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead className="border-b bg-muted/50">
               <tr>
-                <td
-                  colSpan={4}
-                  className="px-6 py-16 text-center text-base text-muted-foreground"
-                >
-                  No passwords found. Add your first password to get started.
-                </td>
+                <th className="w-16 px-3 py-3 align-middle">
+                  <div className="flex items-center justify-center">
+                    <List className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                  </div>
+                </th>
+                <th className="w-20 px-3 py-3 text-left text-sm font-medium text-muted-foreground align-middle">
+                  Logo
+                </th>
+                <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground align-middle">
+                  Title
+                </th>
+                <th className="w-32 px-3 py-3 text-left text-sm font-medium text-muted-foreground align-middle">
+                  Created
+                </th>
               </tr>
-            ) : (
-              data.map((item) => (
-                <tr
-                  key={item.id}
-                  onClick={() => onRowClick(item)}
-                  className="hover:bg-muted/50 transition-all duration-200 cursor-pointer hover:shadow-sm"
-                >
-                  <td className="w-16 px-4 py-4 align-middle">
-                    <div className="flex items-center justify-center">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          onActionClick(item.id)
-                        }}
-                        className="inline-flex items-center justify-center rounded-md p-2 hover:bg-muted transition-all duration-200 flex-shrink-0 hover:scale-110 active:scale-95"
-                        aria-label="Edit password"
-                      >
-                        <Pen className="h-4 w-4 text-muted-foreground hover:text-foreground" />
-                      </button>
-                    </div>
+            </thead>
+            <tbody className="divide-y">
+              {data.length === 0 ? (
+                <tr>
+                  <td colSpan={4} className="px-6 py-12 text-center text-sm text-muted-foreground">
+                    No passwords found. Add your first password to get started.
                   </td>
-                  <td className="w-24 px-4 py-4 align-middle">
-                    <div className="flex items-center">
+                </tr>
+              ) : (
+                data.map((item) => (
+                  <tr
+                    key={item.id}
+                    onClick={() => onRowClick(item)}
+                    className="hover:bg-muted/50 transition-all duration-200 cursor-pointer"
+                  >
+                    <td className="w-16 px-3 py-3 align-middle">
+                      <div className="flex items-center justify-center">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            onActionClick(item.id)
+                          }}
+                          className="inline-flex items-center justify-center rounded-md p-2 hover:bg-muted transition-all duration-200 flex-shrink-0 hover:scale-110 active:scale-95"
+                          aria-label="Edit password"
+                        >
+                          <Pen className="h-3.5 w-3.5 text-muted-foreground hover:text-foreground" />
+                        </button>
+                      </div>
+                    </td>
+                    <td className="w-20 px-3 py-3 align-middle">
                       {item.logo ? (
                         <img
                           src={item.logo}
                           alt={item.title}
-                          className="h-10 w-10 rounded-lg object-conatain flex-shrink-0"
+                          className="h-9 w-9 rounded-md object-contain flex-shrink-0"
                         />
                       ) : (
-                        <div className="flex h-10 w-10 items-center justify-center rounded-md bg-primary/10 flex-shrink-0">
+                        <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10 flex-shrink-0">
                           <span className="text-sm font-semibold text-primary">
                             {item.title.charAt(0).toUpperCase()}
                           </span>
                         </div>
                       )}
-                    </div>
-                  </td>
-                  <td className="px-4 py-4 font-medium align-middle text-sm truncate">{item.title}</td>
-                  <td className="w-32 px-4 py-4 text-sm text-muted-foreground align-middle">
-                    {new Date(item.created_at).toLocaleDateString()}
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+                    </td>
+                    <td className="px-4 py-3 font-medium align-middle text-sm">
+                      <span className="line-clamp-1">{item.title}</span>
+                    </td>
+                    <td className="w-32 px-3 py-3 text-xs text-muted-foreground align-middle">
+                      {new Date(item.created_at).toLocaleDateString()}
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
+
+      {/* Mobile Card View */}
+      <div className="sm:hidden space-y-2">
+        {data.length === 0 ? (
+          <div className="rounded-lg border bg-card p-8 text-center text-sm text-muted-foreground">
+            No passwords found. Add your first password to get started.
+          </div>
+        ) : (
+          data.map((item) => (
+            <div
+              key={item.id}
+              onClick={() => onRowClick(item)}
+              className="rounded-lg border bg-card p-3 hover:bg-muted/50 transition-all duration-200 cursor-pointer active:bg-muted"
+            >
+              <div className="flex items-center gap-3">
+                {item.logo ? (
+                  <img
+                    src={item.logo}
+                    alt={item.title}
+                    className="h-10 w-10 rounded-md object-contain flex-shrink-0"
+                  />
+                ) : (
+                  <div className="flex h-10 w-10 items-center justify-center rounded-md bg-primary/10 flex-shrink-0">
+                    <span className="text-sm font-semibold text-primary">
+                      {item.title.charAt(0).toUpperCase()}
+                    </span>
+                  </div>
+                )}
+                <div className="flex-1 min-w-0">
+                  <p className="font-medium text-sm truncate">{item.title}</p>
+                  <p className="text-xs text-muted-foreground">
+                    {new Date(item.created_at).toLocaleDateString()}
+                  </p>
+                </div>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    onActionClick(item.id)
+                  }}
+                  className="inline-flex items-center justify-center rounded-md p-2 hover:bg-muted transition-all duration-200 flex-shrink-0 active:scale-95"
+                  aria-label="Edit password"
+                >
+                  <Pen className="h-4 w-4 text-muted-foreground" />
+                </button>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+    </>
   )
 }
 
@@ -375,29 +423,28 @@ export function HomePage() {
   })
 
   return (
-    <div className="flex h-screen flex-col">
-      {/* Scrollable Content */}
+    <div className="flex h-screen flex-col overflow-hidden">
       <div className="flex-1 overflow-y-auto">
-        <div className="container mx-auto max-w-10xl px-3 py-4 sm:px-4 sm:py-6 md:px-6 md:py-8 lg:px-8">
+        <div className="w-full px-4 py-5 sm:px-6 sm:py-6 md:px-8 md:py-8 lg:px-12 lg:py-10 xl:px-16 xl:py-12">
           {/* Header Section */}
-          <div className="flex justify-between items-start gap-3 sm:gap-4 mb-5 sm:mb-6">
-            <div className="animate-in slide-in-from-top-4 duration-500 flex-1">
-              <div className="w-12 h-12 sm:w-16 sm:h-16 mb-2 relative">
+          <div className="flex justify-between items-start gap-3 mb-5 sm:mb-6">
+            <div className="animate-in slide-in-from-top-4 duration-500 flex-1 min-w-0">
+              <div className="w-12 h-12 sm:w-14 sm:h-14 mb-2 relative">
                 <img
                   src="/white_mode.png"
-                  alt="LocalPass Logo"
-                  className="w-12 h-12 sm:w-16 sm:h-16 absolute inset-0 block dark:hidden"
+                  alt="LocalPass"
+                  className="w-12 h-12 sm:w-14 sm:h-14 absolute inset-0 block dark:hidden object-contain"
                 />
                 <img
                   src="/dark_mode.png"
-                  alt="LocalPass Logo dark"
-                  className="w-12 h-12 sm:w-16 sm:h-16 absolute inset-0 hidden dark:block"
+                  alt="LocalPass"
+                  className="w-12 h-12 sm:w-14 sm:h-14 absolute inset-0 hidden dark:block object-contain"
                 />
               </div>
-              <h1 className="text-xl sm:text-3xl font-bold tracking-tight mb-0.5 sm:mb-2">
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight mb-1">
                 LocalPass
               </h1>
-              <p className="text-xs sm:text-base text-muted-foreground">
+              <p className="text-xs sm:text-sm md:text-base text-muted-foreground">
                 Manage and secure all your passwords
               </p>
             </div>
@@ -407,13 +454,13 @@ export function HomePage() {
           </div>
 
           {/* Search and Add Section */}
-          <div className="mb-4 sm:mb-6 flex flex-col gap-2 sm:gap-3 sm:flex-row sm:items-center animate-in slide-in-from-top-4 duration-500 delay-100">
+          <div className="mb-4 sm:mb-5 flex flex-col gap-2 sm:flex-row sm:items-center animate-in slide-in-from-top-4 duration-500 delay-100">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground pointer-events-none" />
               <Input
                 type="text"
                 placeholder="Search..."
-                className="pl-10 h-9 sm:h-10"
+                className="pl-9 h-9 sm:h-10 text-sm"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -429,25 +476,25 @@ export function HomePage() {
               onRowClick={handleRowClick}
             />
           </div>
-
-          {/* Password Detail Modal */}
-          <PasswordDetailModal
-            password={selectedPassword}
-            open={detailModalOpen}
-            onClose={() => setDetailModalOpen(false)}
-          />
-
-          {/* Edit Dialog */}
-          {selectedPasswordId && (
-            <EditPasswordDialog
-              passwordId={selectedPasswordId}
-              open={editDialogOpen}
-              onOpenChange={setEditDialogOpen}
-              onPasswordUpdated={fetchPasswords}
-            />
-          )}
         </div>
       </div>
+
+      {/* Password Detail Modal */}
+      <PasswordDetailModal
+        password={selectedPassword}
+        open={detailModalOpen}
+        onClose={() => setDetailModalOpen(false)}
+      />
+
+      {/* Edit Dialog */}
+      {selectedPasswordId && (
+        <EditPasswordDialog
+          passwordId={selectedPasswordId}
+          open={editDialogOpen}
+          onOpenChange={setEditDialogOpen}
+          onPasswordUpdated={fetchPasswords}
+        />
+      )}
     </div>
   )
 }
