@@ -54,7 +54,7 @@ function PasswordDetailModal({
               <img
                 src={password.logo}
                 alt={password.title}
-                className="h-10 w-10 sm:h-12 sm:w-12 rounded-md object-cover flex-shrink-0"
+                className="h-10 w-10 sm:h-12 sm:w-12 rounded-md object-contain flex-shrink-0"
               />
             ) : (
               <div className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-md bg-primary/10 flex-shrink-0">
@@ -296,7 +296,7 @@ function DataTable({
                         <img
                           src={item.logo}
                           alt={item.title}
-                          className="h-10 w-10 rounded-md object-cover flex-shrink-0"
+                          className="h-10 w-10 rounded-lg object-conatain flex-shrink-0"
                         />
                       ) : (
                         <div className="flex h-10 w-10 items-center justify-center rounded-md bg-primary/10 flex-shrink-0">
