@@ -426,74 +426,76 @@ export function HomePage() {
   })
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <div className="container mx-auto max-w-10xl px-3 py-4 sm:px-4 sm:py-6 md:px-6 md:py-8 lg:px-8">
-        {/* Header Section */}
-        <div className="flex justify-between">
-          <div className="mb-6 sm:mb-8 animate-in slide-in-from-top-4 duration-500">
-            <div className="w-16 h-16 mb-2 relative">
-              <img
-                src="/white_mode.png"
-                alt="LocalPass Logo"
-                className="w-16 h-16 absolute inset-0 block dark:hidden"
-              />
-              <img
-                src="/dark_mode.png"
-                alt="LocalPass Logo dark"
-                className="w-16 h-16 absolute inset-0 hidden dark:block"
+    <div className="flex h-screen flex-col">
+      {/* Scrollable Content */}
+      <div className="flex-1 overflow-y-auto">
+        <div className="container mx-auto max-w-10xl px-3 py-4 sm:px-4 sm:py-6 md:px-6 md:py-8 lg:px-8">
+          {/* Header Section */}
+          <div className="flex justify-between items-start mb-6">
+            <div className="animate-in slide-in-from-top-4 duration-500">
+              <div className="w-16 h-16 mb-2 relative">
+                <img
+                  src="/white_mode.png"
+                  alt="LocalPass Logo"
+                  className="w-16 h-16 absolute inset-0 block dark:hidden"
+                />
+                <img
+                  src="/dark_mode.png"
+                  alt="LocalPass Logo dark"
+                  className="w-16 h-16 absolute inset-0 hidden dark:block"
+                />
+              </div>
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-1 sm:mb-2">
+                LocalPass
+              </h1>
+              <p className="text-sm sm:text-base text-muted-foreground">
+                Manage and secure all your passwords in one place
+              </p>
+            </div>
+            <ModeToggle />
+          </div>
+
+          {/* Search and Add Section */}
+          <div className="mb-4 sm:mb-6 flex flex-col gap-3 sm:gap-4 sm:flex-row sm:items-center animate-in slide-in-from-top-4 duration-500 delay-100">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground pointer-events-none" />
+              <Input
+                type="text"
+                placeholder="Search passwords..."
+                className="pl-10 h-10 sm:h-11"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-1 sm:mb-2">
-              LocalPass
-            </h1>
-            <p className="text-sm sm:text-base text-muted-foreground">
-              Manage and secure all your passwords in one place
-            </p>
-
+            <AddPasswordDialog onPasswordAdded={fetchPasswords} />
           </div>
-          <ModeToggle />
-        </div>
 
-        {/* Search and Add Section */}
-        <div className="mb-4 sm:mb-6 flex flex-col gap-3 sm:gap-4 sm:flex-row sm:items-center animate-in slide-in-from-top-4 duration-500 delay-100">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground pointer-events-none" />
-            <Input
-              type="text"
-              placeholder="Search passwords..."
-              className="pl-10 h-10 sm:h-11"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+          {/* Data Table */}
+          <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 delay-200">
+            <DataTable
+              data={filteredData}
+              onActionClick={handleActionClick}
+              onRowClick={handleRowClick}
             />
           </div>
-          <AddPasswordDialog onPasswordAdded={fetchPasswords} />
-        </div>
 
-        {/* Data Table */}
-        <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 delay-200">
-          <DataTable
-            data={filteredData}
-            onActionClick={handleActionClick}
-            onRowClick={handleRowClick}
+          {/* Password Detail Modal */}
+          <PasswordDetailModal
+            password={selectedPassword}
+            open={detailModalOpen}
+            onClose={() => setDetailModalOpen(false)}
           />
+
+          {/* Edit Dialog */}
+          {selectedPasswordId && (
+            <EditPasswordDialog
+              passwordId={selectedPasswordId}
+              open={editDialogOpen}
+              onOpenChange={setEditDialogOpen}
+              onPasswordUpdated={fetchPasswords}
+            />
+          )}
         </div>
-
-        {/* Password Detail Modal */}
-        <PasswordDetailModal
-          password={selectedPassword}
-          open={detailModalOpen}
-          onClose={() => setDetailModalOpen(false)}
-        />
-
-        {/* Edit Dialog */}
-        {selectedPasswordId && (
-          <EditPasswordDialog
-            passwordId={selectedPasswordId}
-            open={editDialogOpen}
-            onOpenChange={setEditDialogOpen}
-            onPasswordUpdated={fetchPasswords}
-          />
-        )}
       </div>
     </div>
   )
