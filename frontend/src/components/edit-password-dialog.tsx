@@ -280,16 +280,17 @@ export function EditPasswordDialog({
             />
           </div>
 
-          <div className="flex justify-between gap-2 pt-4">
+          <div className="flex flex-col gap-2 pt-4 sm:flex-row sm:justify-between">
             <Button
               type="button"
               variant="destructive"
               onClick={handleDelete}
               disabled={isLoading || isDeleting}
+              className="order-3 sm:order-1"
             >
               {isDeleting ? "Deleting..." : "Delete"}
             </Button>
-            <div className="flex gap-2">
+            <div className="flex flex-col-reverse gap-2 sm:flex-row">
               <Button
                 type="button"
                 variant="outline"

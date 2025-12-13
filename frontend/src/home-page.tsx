@@ -239,23 +239,23 @@ function DataTable({
 }) {
   return (
     <div className="rounded-lg border bg-card shadow-sm overflow-hidden">
-      {/* Desktop Table View - md and up */}
-      <div className="hidden lg:block overflow-x-auto">
-        <table className="w-full table-fixed">
+      {/* Table View - Always visible and responsive */}
+      <div className="overflow-x-auto">
+        <table className="w-full">
           <thead className="border-b bg-muted/50">
             <tr>
-              <th className="w-16 px-2 py-3 align-middle">
+              <th className="w-16 px-4 py-4 align-middle">
                 <div className="flex items-center justify-center h-full">
-                  <List className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                  <List className="h-5 w-5 text-muted-foreground flex-shrink-0" />
                 </div>
               </th>
-              <th className="w-20 px-2 py-3 text-left text-xs font-medium text-muted-foreground align-middle">
+              <th className="w-24 px-4 py-4 text-left text-sm font-medium text-muted-foreground align-middle">
                 Logo
               </th>
-              <th className="px-3 py-3 text-left text-xs font-medium text-muted-foreground align-middle">
+              <th className="px-4 py-4 text-left text-sm font-medium text-muted-foreground align-middle">
                 Title
               </th>
-              <th className="w-28 px-3 py-3 text-left text-xs font-medium text-muted-foreground align-middle">
+              <th className="w-32 px-4 py-4 text-left text-sm font-medium text-muted-foreground align-middle">
                 Created
               </th>
             </tr>
@@ -265,7 +265,7 @@ function DataTable({
               <tr>
                 <td
                   colSpan={4}
-                  className="px-6 py-12 text-center text-sm text-muted-foreground"
+                  className="px-6 py-16 text-center text-base text-muted-foreground"
                 >
                   No passwords found. Add your first password to get started.
                 </td>
@@ -277,39 +277,39 @@ function DataTable({
                   onClick={() => onRowClick(item)}
                   className="hover:bg-muted/50 transition-all duration-200 cursor-pointer hover:shadow-sm"
                 >
-                  <td className="w-16 px-2 py-3 align-middle">
+                  <td className="w-16 px-4 py-4 align-middle">
                     <div className="flex items-center justify-center">
                       <button
                         onClick={(e) => {
                           e.stopPropagation()
                           onActionClick(item.id)
                         }}
-                        className="inline-flex items-center justify-center rounded-md p-1.5 hover:bg-muted transition-all duration-200 flex-shrink-0 hover:scale-110 active:scale-95"
+                        className="inline-flex items-center justify-center rounded-md p-2 hover:bg-muted transition-all duration-200 flex-shrink-0 hover:scale-110 active:scale-95"
                         aria-label="Edit password"
                       >
-                        <Pen className="h-3 w-3 text-muted-foreground hover:text-foreground" />
+                        <Pen className="h-4 w-4 text-muted-foreground hover:text-foreground" />
                       </button>
                     </div>
                   </td>
-                  <td className="w-20 px-2 py-3 align-middle">
+                  <td className="w-24 px-4 py-4 align-middle">
                     <div className="flex items-center">
                       {item.logo ? (
                         <img
                           src={item.logo}
                           alt={item.title}
-                          className="h-8 w-8 rounded-lg object-conatain flex-shrink-0"
+                          className="h-10 w-10 rounded-lg object-conatain flex-shrink-0"
                         />
                       ) : (
-                        <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10 flex-shrink-0">
-                          <span className="text-xs font-semibold text-primary">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-md bg-primary/10 flex-shrink-0">
+                          <span className="text-sm font-semibold text-primary">
                             {item.title.charAt(0).toUpperCase()}
                           </span>
                         </div>
                       )}
                     </div>
                   </td>
-                  <td className="px-3 py-3 font-medium align-middle text-xs truncate">{item.title}</td>
-                  <td className="w-28 px-3 py-3 text-xs text-muted-foreground align-middle">
+                  <td className="px-4 py-4 font-medium align-middle text-sm truncate">{item.title}</td>
+                  <td className="w-32 px-4 py-4 text-sm text-muted-foreground align-middle">
                     {new Date(item.created_at).toLocaleDateString()}
                   </td>
                 </tr>
@@ -317,57 +317,6 @@ function DataTable({
             )}
           </tbody>
         </table>
-      </div>
-
-      {/* Mobile Card View - up to lg */}
-      <div className="lg:hidden divide-y">
-        {data.length === 0 ? (
-          <div className="px-4 py-12 text-center text-sm text-muted-foreground">
-            No passwords found. Add your first password to get started.
-          </div>
-        ) : (
-          data.map((item) => (
-            <div
-              key={item.id}
-              onClick={() => onRowClick(item)}
-              className="p-3 sm:p-4 hover:bg-muted/50 transition-all duration-200 cursor-pointer active:bg-muted"
-            >
-              <div className="flex items-center justify-between gap-2 sm:gap-3">
-                <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
-                  {item.logo ? (
-                    <img
-                      src={item.logo}
-                      alt={item.title}
-                      className="h-9 w-9 sm:h-12 sm:w-12 rounded-md object-contain flex-shrink-0"
-                    />
-                  ) : (
-                    <div className="flex h-9 w-9 sm:h-12 sm:w-12 items-center justify-center rounded-md bg-primary/10 flex-shrink-0">
-                      <span className="text-xs sm:text-base font-semibold text-primary">
-                        {item.title.charAt(0).toUpperCase()}
-                      </span>
-                    </div>
-                  )}
-                  <div className="min-w-0 flex-1">
-                    <p className="text-sm sm:text-base font-medium truncate">{item.title}</p>
-                    <p className="text-xs text-muted-foreground">
-                      {new Date(item.created_at).toLocaleDateString()}
-                    </p>
-                  </div>
-                </div>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    onActionClick(item.id)
-                  }}
-                  className="inline-flex items-center justify-center rounded-md p-1.5 sm:p-2.5 hover:bg-muted transition-all duration-200 flex-shrink-0 active:scale-95"
-                  aria-label="Edit password"
-                >
-                  <Pen className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-muted-foreground" />
-                </button>
-              </div>
-            </div>
-          ))
-        )}
       </div>
     </div>
   )

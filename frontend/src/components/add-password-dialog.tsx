@@ -177,7 +177,7 @@ export function AddPasswordDialog({ onPasswordAdded }: AddPasswordDialogProps) {
             />
           </div>
 
-          <div className="flex justify-end gap-2 pt-4">
+          <div className="flex flex-col-reverse sm:flex-row justify-end gap-2 pt-4">
             <Button
               type="button"
               variant="outline"
