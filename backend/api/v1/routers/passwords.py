@@ -6,6 +6,10 @@ from backend.crud import password as password_crud
 from backend.crud import user as user_crud
 from ..deps import get_db
 
+import pyotp
+import time
+from datetime import datetime
+
 password_router = APIRouter(prefix="/passwords", tags=["Passwords"])
 
 
@@ -59,6 +63,12 @@ async def create_password(
     db_password = await password_crud.create_password(
         db=db, password=password, user_id=user.id
     )
+    
+    if not db_password:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid FA code",
+        )
 
     # Return with decrypted password
     return password_crud.decrypt_password_for_response(db_password)
@@ -141,3 +151,40 @@ async def delete_password(
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Password not found"
         )
+
+@password_router.get("/user/totp/{secret}/{password_id}", status_code=status.HTTP_200_OK)
+async def get_user_totop_code(
+    secret: str,
+    password_id: int,
+    db: AsyncSession = Depends(get_db)
+):
+    user = await user_crud.authenticate_user_secret(db, secret)
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect secret or password",
+        )
+    
+    password = await password_crud.get_password(db, password_id)
+    if not password:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Password not found"
+        )
+    
+    if not password.fa_code:
+        return {"code": 0}
+    
+    totp = pyotp.TOTP(password.fa_code)
+    current_token = totp.now()
+    time_remaining = 30 - (int(time.time() % 30))
+    
+    next_request_time = time_remaining * 1000
+            
+    return {
+        "success": True,
+        "user_id": user.user_id,
+        "code": current_token,
+        "time_remaining_seconds": time_remaining,
+        "next_request_in_ms": next_request_time,
+        "generated_at": datetime.now().isoformat()
+    }

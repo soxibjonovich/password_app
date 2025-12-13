@@ -13,6 +13,7 @@ dependencies = [
     "greenlet>=3.3.0",
     "passlib>=1.7.4",
     "pydantic-settings>=2.12.0",
+    "pyotp>=2.9.0",
     "ruff>=0.14.9",
     "segno>=1.6.6",
     "sqlalchemy>=2.0.45",
