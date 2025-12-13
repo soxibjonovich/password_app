@@ -429,7 +429,18 @@ export function HomePage() {
       <div className="container mx-auto max-w-7xl px-3 py-4 sm:px-4 sm:py-6 md:px-6 md:py-8 lg:px-8">
         {/* Header Section */}
         <div className="mb-6 sm:mb-8 animate-in slide-in-from-top-4 duration-500">
-          <img src="/Boundless Book.png" alt="LocalPass Logo" className="w-16 h-16 mb-2" />
+          <div className="w-16 h-16 mb-2 relative">
+            <img
+              src="/white_mode.png"
+              alt="LocalPass Logo"
+              className="w-16 h-16 absolute inset-0 block dark:hidden"
+            />
+            <img
+              src="/dark_mode.png"
+              alt="LocalPass Logo dark"
+              className="w-16 h-16 absolute inset-0 hidden dark:block"
+          />
+          </div>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-1 sm:mb-2">
             LocalPass
           </h1>
