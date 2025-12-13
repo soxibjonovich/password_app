@@ -31,12 +31,55 @@ function PasswordDetailModal({
   const [showPassword, setShowPassword] = useState(false)
   const [copied, setCopied] = useState<string | null>(null)
 
+  // Reset state when modal closes
+  useEffect(() => {
+    if (!open) {
+      setShowPassword(false)
+      setCopied(null)
+    }
+  }, [open])
+
   if (!password || !open) return null
 
-  const copyToClipboard = (text: string, field: string) => {
-    navigator.clipboard.writeText(text)
-    setCopied(field)
-    setTimeout(() => setCopied(null), 2000)
+  // Fallback copy method for browsers that don't support clipboard API
+  const fallbackCopyToClipboard = (text: string, field: string) => {
+    const textArea = document.createElement('textarea')
+    textArea.value = text
+    textArea.style.position = 'fixed'
+    textArea.style.left = '-999999px'
+    textArea.style.top = '-999999px'
+    document.body.appendChild(textArea)
+    textArea.focus()
+    textArea.select()
+    
+    try {
+      const successful = document.execCommand('copy')
+      if (successful) {
+        setCopied(field)
+        setTimeout(() => setCopied(null), 2000)
+      }
+    } catch (err) {
+      console.error('Fallback copy failed:', err)
+    }
+    
+    document.body.removeChild(textArea)
+  }
+
+  const copyToClipboard = async (text: string, field: string) => {
+    // Check if clipboard API is available
+    if (!navigator.clipboard) {
+      fallbackCopyToClipboard(text, field)
+      return
+    }
+
+    try {
+      await navigator.clipboard.writeText(text)
+      setCopied(field)
+      setTimeout(() => setCopied(null), 2000)
+    } catch (err) {
+      console.error('Clipboard API failed, using fallback:', err)
+      fallbackCopyToClipboard(text, field)
+    }
   }
 
   return (
@@ -92,7 +135,10 @@ function PasswordDetailModal({
                 <Button
                   size="sm"
                   variant="ghost"
-                  onClick={() => copyToClipboard(password.email, 'email')}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    copyToClipboard(password.email, 'email')
+                  }}
                   className="flex-shrink-0 transition-all duration-200 hover:scale-110 h-8 w-8 sm:h-9 sm:w-9 p-0"
                 >
                   {copied === 'email' ? (
@@ -117,7 +163,10 @@ function PasswordDetailModal({
                 <Button
                   size="sm"
                   variant="ghost"
-                  onClick={() => copyToClipboard(password.username!, 'username')}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    copyToClipboard(password.username!, 'username')
+                  }}
                   className="flex-shrink-0 transition-all duration-200 hover:scale-110 h-8 w-8 sm:h-9 sm:w-9 p-0"
                 >
                   {copied === 'username' ? (
@@ -144,7 +193,10 @@ function PasswordDetailModal({
                 <Button
                   size="sm"
                   variant="ghost"
-                  onClick={() => setShowPassword(!showPassword)}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    setShowPassword(!showPassword)
+                  }}
                   className="transition-all duration-200 hover:scale-110 h-8 w-8 sm:h-9 sm:w-9 p-0"
                 >
                   {showPassword ? (
@@ -156,7 +208,10 @@ function PasswordDetailModal({
                 <Button
                   size="sm"
                   variant="ghost"
-                  onClick={() => copyToClipboard(password.password, 'password')}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    copyToClipboard(password.password, 'password')
+                  }}
                   className="transition-all duration-200 hover:scale-110 h-8 w-8 sm:h-9 sm:w-9 p-0"
                 >
                   {copied === 'password' ? (
@@ -181,7 +236,10 @@ function PasswordDetailModal({
                 <Button
                   size="sm"
                   variant="ghost"
-                  onClick={() => copyToClipboard(password.fa_code!, '2fa')}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    copyToClipboard(password.fa_code!, '2fa')
+                  }}
                   className="flex-shrink-0 transition-all duration-200 hover:scale-110 h-8 w-8 sm:h-9 sm:w-9 p-0"
                 >
                   {copied === '2fa' ? (
@@ -483,7 +541,10 @@ export function HomePage() {
       <PasswordDetailModal
         password={selectedPassword}
         open={detailModalOpen}
-        onClose={() => setDetailModalOpen(false)}
+        onClose={() => {
+          setDetailModalOpen(false)
+          setSelectedPassword(null)
+        }}
       />
 
       {/* Edit Dialog */}
