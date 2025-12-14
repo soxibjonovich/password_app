@@ -118,7 +118,7 @@ async def update_password(
         )
 
     db_password = await password_crud.update_password(
-        db, password_id=password_id, password=password, user_id=user.id
+        db, password_id=password_id, password=password, user_id=user.id, fa_code=password.fa_code
     )
     if not db_password:
         raise HTTPException(

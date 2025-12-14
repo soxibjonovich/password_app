@@ -105,7 +105,7 @@ async def update_password(
         )
 
     # TOTP URI валидация + извлечение секрета
-    if "fa_code" in update_data:
+    if "fa_code" in update_data and update_data["fa_code"]:
         fa_uri = update_data["fa_code"]
         
         # 1. Проверяем валидность URI
